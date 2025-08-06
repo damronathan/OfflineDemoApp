@@ -45,14 +45,14 @@ else
 }
 
 @code {
-    private List<ShortsModel>? shorts;
+    private List<ShortModel>? shorts;
 
     protected override async Task OnInitializedAsync()
     {
         try
         {
             string url = $"{config["ApiUrl"]}/shorts";
-            shorts = await httpClient.GetFromJsonAsync<List<ShortsModel>>(url);
+            shorts = await httpClient.GetFromJsonAsync<List<ShortModel>>(url);
         }
         catch (Exception ex)
         {

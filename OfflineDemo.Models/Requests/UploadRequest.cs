@@ -1,7 +1,7 @@
 ﻿using Microsoft.AspNetCore.Http;
 using System.ComponentModel.DataAnnotations;
 
-namespace OfflineDemo.Models.Models;
+namespace OfflineDemo.Models.Requests;
 
 public class UploadRequest
 {

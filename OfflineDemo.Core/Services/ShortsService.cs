@@ -1,16 +1,13 @@
-﻿using OfflineDemo.Data;
-using OfflineDemo.Models;
+﻿using OfflineDemo.Models;
 using OfflineDemo.Core.Repositories;
-using System.ComponentModel;
-using OfflineDemo.Models.Models;
-using Azure.Storage.Blobs.Specialized;
-using System.Net;
+using OfflineDemo.Models.Requests;
+using OfflineDemo.Models.Dto;
 
 namespace OfflineDemo.Core.Services;
 
 public interface IShortsService
 {
-    Task<IEnumerable<ShortsModel>> GetAllShorts();
+    Task<IEnumerable<ShortModel>> GetAllShorts();
     Task UploadShort(UploadRequest request);
 }
 public class ShortsService : IShortsService
@@ -24,7 +21,7 @@ public class ShortsService : IShortsService
         _repo = repo;
         _storageService = storageService;
     }
-    public async Task<IEnumerable<ShortsModel>> GetAllShorts()
+    public async Task<IEnumerable<ShortModel>> GetAllShorts()
     {
         return await _repo.GetAllShortsAsync();
     }
@@ -42,7 +39,7 @@ public class ShortsService : IShortsService
         {
             throw new ArgumentException("MP4 file exceeds the 800MB limit.");
         }
-        var createShortRequest = new CreateShortRequest
+        var createShortRequest = new CreateShortDto
         {
             Title = request.Title,
             Description = request.Description,
@@ -52,7 +49,7 @@ public class ShortsService : IShortsService
         int id = await _repo.CreateShortAsync(createShortRequest);
         var mp4FileUrl = await _storageService.UploadFile("shorts", id, request.Mp4File);
         var imageFileUrl = await _storageService.UploadFile("images", id, request.ImageFile);
-        var updateShortRequest = new UpdateShortRequest
+        var updateShortRequest = new UpdateShortDto
         {
             Id = id,
             Mp4FileUrl = mp4FileUrl,

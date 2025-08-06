@@ -1,6 +1,6 @@
-﻿namespace OfflineDemo.Models;
+﻿namespace OfflineDemo.Models.Dto;
 
-public class UpdateShortRequest
+public class UpdateShortDto
 {
     public int Id { get; set; }
     public string? Mp4FileUrl { get; set; }

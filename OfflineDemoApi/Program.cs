@@ -2,7 +2,7 @@ using Microsoft.AspNetCore.Components.WebAssembly.Hosting;
 using OfflineDemo.Core.Repositories;
 using OfflineDemo.Core.Services;
 using OfflineDemo.Data;
-using OfflineDemo.Models;
+using OfflineDemo.Models.Config;
 
 var builder = WebApplication.CreateBuilder(args);
 

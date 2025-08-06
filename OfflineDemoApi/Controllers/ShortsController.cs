@@ -1,6 +1,6 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using OfflineDemo.Core.Services;
-using OfflineDemo.Models.Models;
+using OfflineDemo.Models.Requests;
 
 namespace OfflineDemoApi.Controllers
 {
