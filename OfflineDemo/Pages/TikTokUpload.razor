@@ -112,7 +112,7 @@
             content.Add(imageContent, "ImageFile", imageFile.Name);
 
             // Call the API
-            string url = $"{config["ApiUrl"]}/upload";
+            string url = $"{config["ApiUrl"]}/shorts/upload";
             var response = await http.PostAsync(url, content);
 
             if (response.IsSuccessStatusCode)

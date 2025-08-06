@@ -17,11 +17,8 @@
 
   <ItemGroup>
     <ProjectReference Include="..\OfflineDemo.Core\OfflineDemo.Core.csproj" />
+    <ProjectReference Include="..\OfflineDemo.Data\OfflineDemo.Data.csproj" />
     <ProjectReference Include="..\OfflineDemo.Models\OfflineDemo.Models.csproj" />
-  </ItemGroup>
-
-  <ItemGroup>
-    <Folder Include="Controllers\" />
   </ItemGroup>
 
 </Project>

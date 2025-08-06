@@ -18,12 +18,9 @@ public class SqlDataAccess : ISqlDataAccess
 											  U parameters,
 											  string connectionStringName)
 	{
-		string connectionString = _config.GetConnectionString(connectionStringName) ??
-			throw new KeyNotFoundException("Did not find the connection string specified");
+        using var connection = CreateConnection(connectionStringName);
 
-		using IDbConnection connection = new SqlConnection(connectionString);
-
-		List<T> output = (await connection.QueryAsync<T>(
+        List<T> output = (await connection.QueryAsync<T>(
 			storedProcedure,
 			parameters,
 			commandType: CommandType.StoredProcedure)).ToList();
@@ -31,29 +28,34 @@ public class SqlDataAccess : ISqlDataAccess
 		return output;
 	}
 
+	//Returns an id
 	public async Task<T> SaveDataScalar<T, U>(string storedProcedure,
 										   U parameters,
 										   string connectionStringName)
 	{
-		string connectionString = _config.GetConnectionString(connectionStringName) ??
-			throw new KeyNotFoundException("Did not find the connection string specified");
+        using var connection = CreateConnection(connectionStringName);
 
-		using IDbConnection connection = new SqlConnection(connectionString);
-
-		T? output = await connection.ExecuteScalarAsync<T>(storedProcedure, parameters, commandType: CommandType.StoredProcedure);
+        T? output = await connection.ExecuteScalarAsync<T>(storedProcedure, parameters, commandType: CommandType.StoredProcedure);
 
 		return output ?? throw new ArgumentNullException("The return value was null, which is an invalid result.");
 	}
 
+	//No return
 	public async Task SaveData<T>(string storedProcedure,
 								  T parameters,
 								  string connectionStringName)
 	{
-		string connectionString = _config.GetConnectionString(connectionStringName) ??
-			throw new KeyNotFoundException("Did not find the connection string specified");
-
-		using IDbConnection connection = new SqlConnection(connectionString);
+		using var connection = CreateConnection(connectionStringName);
 
 		await connection.ExecuteAsync(storedProcedure, parameters, commandType: CommandType.StoredProcedure);
 	}
+
+	private IDbConnection CreateConnection(string connectionStringName)	
+	{
+        string connectionString = _config.GetConnectionString(connectionStringName) ??
+            throw new KeyNotFoundException("Did not find the connection string specified");
+
+        IDbConnection connection = new SqlConnection(connectionString);
+		return connection;
+    }
 }
